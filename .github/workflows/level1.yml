@@ -12,5 +12,7 @@ jobs:
      runs-on: ubuntu-latest
      steps:
 
-        - run: echo "OS is ${{runner.os}}"
+        - run: |
+            echo "OS is ${{runner.os}}"
+            echo "${{env.BUILD_MODE}}"
         
