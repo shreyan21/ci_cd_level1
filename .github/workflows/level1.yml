@@ -1,0 +1,14 @@
+name: level1
+
+on:
+    push:
+        branches: ["master","main"]
+
+
+jobs:
+    hello:
+     runs-on: ubuntu-latest
+     steps:
+
+        - run: echo "OS is ${{runner.os}}"
+        
