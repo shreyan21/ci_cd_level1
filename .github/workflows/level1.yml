@@ -7,6 +7,8 @@ on:
 
 jobs:
     hello:
+     env:
+        BUILD_MODE: "DEBUG"
      runs-on: ubuntu-latest
      steps:
 
