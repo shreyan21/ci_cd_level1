@@ -2,18 +2,23 @@ name: level1
 
 on:
     push:
-        branches: ["master","main"]
+        branches: "*"
 
 
 jobs:
-    hello:
-     env:
-        BUILD_MODE: "DEBUG"
-     runs-on: ubuntu-latest
-     steps:
-
-        - run: |
-            echo "OS is ${{runner.os}}"
-            echo "${{env.BUILD_MODE}}"
-            echo "${{secrets.MY_NAME}}"
+    build:
+        runs-on: ubuntu-latest
         
+        steps:
+            - id: step1
+              run: echo "version=1.0.${{ github.run_number }}">> $GITHUB_OUTPUT
+        
+        outputs:
+            version: ${{steps.step1.outputs.version}}
+
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "${{needs.build.outputs.version}}"
+
