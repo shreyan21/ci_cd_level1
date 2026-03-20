@@ -6,19 +6,32 @@ on:
 
 
 jobs:
-    build:
+    test:
         runs-on: ubuntu-latest
-        
+        strategy:
+            matrix:
+                node-version: [18,20,22]
         steps:
-            - id: step1
-              run: echo "version=1.0.${{ github.run_number }}">> $GITHUB_OUTPUT
+          
+            - run: |
+                 echo "Node version on ${{github.run_number}} is ${{matrix.node-version}}"
         
-        outputs:
-            version: ${{steps.step1.outputs.version}}
 
-    deploy:
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - run: echo "${{needs.build.outputs.version}}"
+    # build:
+    #     runs-on: ubuntu-latest
+        
+    #     steps:
+    #         - id: step1
+    #           run: echo "version=1.0.${{ github.run_number }}">> $GITHUB_OUTPUT
+        
+    #     outputs:
+    #         version: ${{steps.step1.outputs.version}}
+
+    # deploy:
+    #     needs: build
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - run: |
+    #             echo "${{needs.build.outputs.version}}""
+              
 
