@@ -7,6 +7,7 @@ on:
 
 jobs:
     test:
+        if: github.ref == 'refs/head/master'
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -17,21 +18,22 @@ jobs:
                  echo "Node version on ${{github.run_number}} is ${{matrix.node-version}}"
         
 
-    # build:
-    #     runs-on: ubuntu-latest
+    build:
+        if: false
+        runs-on: ubuntu-latest
         
-    #     steps:
-    #         - id: step1
-    #           run: echo "version=1.0.${{ github.run_number }}">> $GITHUB_OUTPUT
+        steps:
+            - id: step1
+              run: echo "version=1.0.${{ github.run_number }}">> $GITHUB_OUTPUT
         
-    #     outputs:
-    #         version: ${{steps.step1.outputs.version}}
+        outputs:
+            version: ${{steps.step1.outputs.version}}
 
-    # deploy:
-    #     needs: build
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - run: |
-    #             echo "${{needs.build.outputs.version}}""
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - run: |
+                echo "${{needs.build.outputs.version}}""
               
 
